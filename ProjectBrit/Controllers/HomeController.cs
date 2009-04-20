@@ -10,12 +10,19 @@ using System.Web;
 using System.Web.Mvc;
 using ProjectBrit.Data;
 using ProjectBrit.Models;
+using ProjectBrit.Services;
 
 namespace ProjectBrit.Controllers
 {
     [HandleError]
     public class HomeController : Controller
     {
+        private TwitterService twitterService;
+
+        public HomeController()
+        {
+            twitterService = new TwitterService();
+        }
         public ActionResult Index()
         {
             ViewData["Message"] = "Welcome to ASP.NET MVC!";
@@ -37,28 +44,10 @@ namespace ProjectBrit.Controllers
         [OutputCache(Duration = 10, VaryByParam = "none")]
         public ActionResult About()
         {
-
-            HttpWebRequest dajukie7Request = (HttpWebRequest)HttpWebRequest.Create("http://twitter.com/statuses/user_timeline.xml");
-            dajukie7Request.Credentials = new NetworkCredential("dajukie7", "russ3l");
-            dajukie7Request.Method = "GET";
-
-            WebResponse dajukie7Response = dajukie7Request.GetResponse();
-            StreamReader reader = new StreamReader(dajukie7Response.GetResponseStream());
-            string responsePostString = reader.ReadToEnd();
-            reader.Close();
-            XDocument document = XDocument.Parse(responsePostString);
+            XDocument document = twitterService.GetUserStatuses("dajukie7");
+            XDocument doc2 = twitterService.GetUserStatuses("britneemichele");
             string id = document.Element("statuses").Elements("status").Last().Element("id").Value;
-
-            WebRequest request = WebRequest.Create("http://twitter.com/statuses/user_timeline/britneemichele.xml");
-            WebResponse response = (WebResponse)request.GetResponse();
-            Stream dataStream = response.GetResponseStream();
-            // Open the stream using a StreamReader for easy access.
-            reader = new StreamReader(dataStream);
-            XDocument doc2 = XDocument.Parse(reader.ReadToEnd());
             // Read the content.
-          
-            string responseFromServer = reader.ReadToEnd();
-            reader.Close();
 
             foreach(XElement status in document.Descendants("status"))
             {

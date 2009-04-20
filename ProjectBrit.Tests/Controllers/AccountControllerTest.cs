@@ -38,7 +38,7 @@ namespace ProjectBrit.Tests.Controllers
             RedirectToRouteResult result = (RedirectToRouteResult)controller.ChangePassword("oldPass", "newPass", "newPass");
 
             // Assert
-            Assert.AreEqual("ChangePasswordSuccess", result.RouteValues["action"]);
+            Assert.AreEqual("ChangePasswordSuccess", result.Values["action"]);
         }
 
         [TestMethod]
@@ -173,8 +173,8 @@ namespace ProjectBrit.Tests.Controllers
             RedirectToRouteResult result = (RedirectToRouteResult)controller.LogOn("someUser", "goodPass", true, null);
 
             // Assert
-            Assert.AreEqual("Home", result.RouteValues["controller"]);
-            Assert.AreEqual("Index", result.RouteValues["action"]);
+            Assert.AreEqual("Home", result.Values["controller"]);
+            Assert.AreEqual("Index", result.Values["action"]);
         }
 
         [TestMethod]
@@ -239,8 +239,8 @@ namespace ProjectBrit.Tests.Controllers
             RedirectToRouteResult result = (RedirectToRouteResult)controller.LogOff();
 
             // Assert
-            Assert.AreEqual("Home", result.RouteValues["controller"]);
-            Assert.AreEqual("Index", result.RouteValues["action"]);
+            Assert.AreEqual("Home", result.Values["controller"]);
+            Assert.AreEqual("Index", result.Values["action"]);
         }
 
         [TestMethod]
@@ -266,8 +266,8 @@ namespace ProjectBrit.Tests.Controllers
             RedirectToRouteResult result = (RedirectToRouteResult)controller.Register("someUser", "email", "goodPass", "goodPass");
 
             // Assert
-            Assert.AreEqual("Home", result.RouteValues["controller"]);
-            Assert.AreEqual("Index", result.RouteValues["action"]);
+            Assert.AreEqual("Home", result.Values["controller"]);
+            Assert.AreEqual("Index", result.Values["action"]);
         }
 
         [TestMethod]
